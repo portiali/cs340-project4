@@ -1,0 +1,95 @@
+{
+    "acm.org": {
+        "scan_time": 1773045511.721822
+    },
+    "amazon.com": {
+        "scan_time": 1773045511.721815
+    },
+    "cra.org": {
+        "scan_time": 1773045511.721822
+    },
+    "ebpf.io": {
+        "scan_time": 1773045511.721823
+    },
+    "en.wikipedia.org": {
+        "scan_time": 1773045511.721815
+    },
+    "fandom.com": {
+        "scan_time": 1773045511.7218182
+    },
+    "ieee.org": {
+        "scan_time": 1773045511.721822
+    },
+    "illinois.edu": {
+        "scan_time": 1773045511.7218199
+    },
+    "imdb.com": {
+        "scan_time": 1773045511.7218182
+    },
+    "instagram.com": {
+        "scan_time": 1773045511.721819
+    },
+    "kellogg.northwestern.edu": {
+        "scan_time": 1773045511.7218199
+    },
+    "kernel.org": {
+        "scan_time": 1773045511.721823
+    },
+    "lab.senlin.dev": {
+        "scan_time": 1773045511.721819
+    },
+    "lwn.net": {
+        "scan_time": 1773045511.721822
+    },
+    "mccormick.northwestern.edu": {
+        "scan_time": 1773045511.721819
+    },
+    "networks.cs.northwestern.edu": {
+        "scan_time": 1773045511.721819
+    },
+    "news.ycombinator.com": {
+        "scan_time": 1773045511.721822
+    },
+    "northwestern.edu": {
+        "scan_time": 1773045511.721819
+    },
+    "one.one.one.one": {
+        "scan_time": 1773045511.721823
+    },
+    "pinterest.com": {
+        "scan_time": 1773045511.7218182
+    },
+    "reddit.com": {
+        "scan_time": 1773045511.721823
+    },
+    "rust-lang.org": {
+        "scan_time": 1773045511.721823
+    },
+    "senlin.dev": {
+        "scan_time": 1773045511.721819
+    },
+    "stackoverflow.com": {
+        "scan_time": 1773045511.721823
+    },
+    "stevetarzia.com": {
+        "scan_time": 1773045511.7218199
+    },
+    "tripadvisor.com": {
+        "scan_time": 1773045511.7218182
+    },
+    "uchicago.edu": {
+        "scan_time": 1773045511.7218199
+    },
+    "users.cs.northwestern.edu": {
+        "scan_time": 1773045511.7218199
+    },
+    "walmart.com": {
+        "scan_time": 1773045511.721819
+    },
+    "yelp.com": {
+        "scan_time": 1773045511.721815
+    },
+    "youtube.com": {
+        "scan_time": 1773045511.721814
+    }
+}
