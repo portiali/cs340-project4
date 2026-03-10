@@ -45,28 +45,40 @@ DNS_RESOLVERS = [
     "8.8.8.8",
     "9.9.9.9"
 ]
-def get_ipv4(domain):
+def get_ip(domain, type):
     '''
     Uses subprocess to retrieve all ipv4 addresses tied with the domain using the global DNS
     '''
     ips = set()
     for resolver in DNS_RESOLVERS:
         try:
-            lookup = subprocess.check_output(["nslookup", domain, resolver], timeout=2, stderr=subprocess.STDOUT).decode("utf-8")
+            if type == "ipv4":
+                lookup = subprocess.check_output(["nslookup", domain, resolver], timeout=2, stderr=subprocess.STDOUT).decode("utf-8")
+            elif type == "ipv6":
+                lookup = subprocess.check_output(["nslookup","-type=AAAA", domain, resolver], timeout=2, stderr=subprocess.STDOUT).decode("utf-8")
+                # print(lookup)
         except subprocess.TimeoutExpired:
             print(f"Timeout querying {resolver}", file=sys.stderr)
             continue        
         #parses for ipv4 in the response
         responses = lookup.splitlines()
-        answer = False
+        if not responses:
+            return []
 
+        answer = False
         for line in responses:
-            if "answer" in line:
+            if "answer" in line.lower():
                 answer = True
                 continue
-            if answer and line.startswith("Address:"):
-                ip = line.split(":")[1].strip()
-                ips.add(ip)
+
+            if answer:
+                if "Address:" in line:
+                    ip = line.split("Address:")[1].strip()
+                    ips.add(ip)
+
+                elif "AAAA address" in line:
+                    ip = line.split("AAAA address")[1].strip()
+                    ips.add(ip)
     return list(ips)
     
 
@@ -79,7 +91,8 @@ def scan_domain(domain_list):
     for domain in domain_list:
         results[domain] = {}
         results[domain]['scan_time'] = time.time()
-        results[domain]['ipv4_addresses'] = get_ipv4(domain)
+        results[domain]['ipv4_addresses'] = get_ip(domain, "ipv4")
+        results[domain]['ipv6_addresses'] = get_ip(domain, "ipv6")
     return results
 
 
