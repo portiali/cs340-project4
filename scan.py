@@ -29,6 +29,16 @@ DNS_RESOLVERS = [
     "8.8.8.8",
     "9.9.9.9"
 ]
+
+TLS_FLAGS = {
+    "SSLv2": "-ssl2",
+    "SSLv3": "-ssl3",
+    "TLSv1.0": "-tls1",
+    "TLSv1.1": "-tls1_1",
+    "TLSv1.2": "-tls1_2",
+    "TLSv1.3": "-tls1_3"
+}
+
 def get_ip(domain, type):
     '''
     Uses subprocess to retrieve all ipv4 addresses tied with the domain using the global DNS
@@ -37,7 +47,8 @@ def get_ip(domain, type):
     for resolver in DNS_RESOLVERS:
         try:
             if type == "ipv4":
-                lookup = subprocess.check_output(["nslookup", domain, resolver], timeout=2, stderr=subprocess.STDOUT).decode("utf-8")
+                lookup = subprocess.check_output(["nslookup", "-type=A", domain, resolver], timeout=2, stderr=subprocess.STDOUT).decode("utf-8")
+                # print(lookup)
             elif type == "ipv6":
                 lookup = subprocess.check_output(["nslookup","-type=AAAA", domain, resolver], timeout=2, stderr=subprocess.STDOUT).decode("utf-8")
                 # print(lookup)
@@ -46,6 +57,7 @@ def get_ip(domain, type):
             continue        
         #parses for ipv4 in the response
         responses = lookup.splitlines()
+        # print(responses)
         if not responses:
             return []
         answer = False
@@ -98,7 +110,26 @@ def check_hsts(domain):
         return "Strict-Transport-Security" in r.headers
     except requests.RequestException:
         return False
-    
+
+def get_tls_versions(domain):
+    support = []
+    for tls, flag in TLS_FLAGS.items():
+        try:
+            # print('FLAG: ', flag)
+            output = subprocess.check_output(
+                ["openssl", "s_client", flag, "-connect", f"{domain}:443"],
+                input=b"",
+                stderr=subprocess.STDOUT,
+                timeout=2
+            ).decode("utf-8")
+            # print(output)
+            if "Cipher is" in output:
+                support.append(tls)
+        except:
+            continue
+    return support
+
+
 
 def scan_domain(domain_list):
     '''
@@ -107,13 +138,14 @@ def scan_domain(domain_list):
     results = {}
     for domain in domain_list:
         results[domain] = {}
-        results[domain]['scan_time'] = time.time()
-        results[domain]['ipv4_addresses'] = get_ip(domain, "ipv4")
-        results[domain]['ipv6_addresses'] = get_ip(domain, "ipv6")
-        results[domain]['Server'] = get_http_server(domain)
-        results[domain]['insecure_http'] = check_insecure_http(domain)
-        results[domain]['redirect_to_https'] = check_redirect(domain)
-        results[domain]['hsts'] = check_hsts(domain)
+        # results[domain]['scan_time'] = time.time()
+        # results[domain]['ipv4_addresses'] = get_ip(domain, "ipv4")
+        # results[domain]['ipv6_addresses'] = get_ip(domain, "ipv6")
+        # results[domain]['Server'] = get_http_server(domain)
+        # results[domain]['insecure_http'] = check_insecure_http(domain)
+        # results[domain]['redirect_to_https'] = check_redirect(domain)
+        # results[domain]['hsts'] = check_hsts(domain)
+        results[domain]['tls_versions'] = get_tls_versions(domain)
     return results
 
 
