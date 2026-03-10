@@ -3,7 +3,7 @@ import time
 import json
 import subprocess
 import requests
-
+import socket
 #these use all the dns resolvers
 # DNS_RESOLVERS = ["208.67.222.222",
 # "1.1.1.1",
@@ -70,7 +70,13 @@ def get_http_server(domain):
         return headers["Server"]
     return None
     
-
+def check_insecure_http(domain):
+    try:
+        s = socket.create_connection((domain, 80), timeout=2)
+        s.close()
+        return True
+    except:
+        return False
 
 def scan_domain(domain_list):
     '''
@@ -83,6 +89,7 @@ def scan_domain(domain_list):
         results[domain]['ipv4_addresses'] = get_ip(domain, "ipv4")
         results[domain]['ipv6_addresses'] = get_ip(domain, "ipv6")
         results[domain]['Server'] = get_http_server(domain)
+        results[domain]['insecure_http'] = check_insecure_http(domain)
     return results
 
 
