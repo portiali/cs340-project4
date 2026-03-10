@@ -151,7 +151,8 @@ def get_root_ca(domain):
         root_ca = root_line.split(",")[1].split("=")[1].strip()
         return root_ca
     except:
-        return None                
+        return None    
+            
 
 def get_rdns_names(ips):
     reverse_names = set()
@@ -173,6 +174,32 @@ def get_rdns_names(ips):
     except:
         return []
 
+def get_rtt(ips):
+    min_t, max_t = float('inf'), float('-inf')
+    try:
+        for ip in ips:
+            cmd = f"sh -c \"time echo -e '\\x1dclose\\x0d' | telnet {ip} 443\""
+            result = subprocess.check_output(
+                cmd,
+                shell=True,
+                stderr=subprocess.STDOUT,
+                timeout=5
+            ).decode()
+            lines = result.splitlines()
+            
+            for line in lines:
+                if line.startswith('real'):
+                    minutes, secs = line.split()[1].split("m")
+                    minutes = float(minutes)
+                    secs = float(secs[:-1])
+                    total = int((60*minutes + secs)*1000)
+                    min_t = min(min_t, total)
+                    max_t = max(max_t, total)
+        return [min_t, max_t] if min_t != float('inf') and max_t != float('-inf') else None
+    except FileNotFoundError:
+        print('telnet command not found, skipping RTT!', file=sys.stderr)
+        return None
+
 
 def scan_domain(domain_list):
     '''
@@ -190,7 +217,13 @@ def scan_domain(domain_list):
         # results[domain]['hsts'] = check_hsts(domain)
         # results[domain]['tls_versions'] = get_tls_versions(domain)
         # results[domain]['root_ca'] = get_root_ca(domain)
-        results[domain]['rdns_names'] = get_rdns_names(results[domain]['ipv4_addresses'])
+        # results[domain]['rdns_names'] = get_rdns_names(results[domain]['ipv4_addresses'])
+        
+        
+        rtts = get_rtt(results[domain]['ipv4_addresses'])
+        if rtts:
+            results[domain]['rtt_range'] = rtts
+
     return results
 
 
