@@ -153,6 +153,26 @@ def get_root_ca(domain):
     except:
         return None                
 
+def get_rdns_names(ips):
+    reverse_names = set()
+    try:
+        for ip in ips:
+            lookup = subprocess.check_output(["nslookup", "-type=PTR", ip, "8.8.8.8"], timeout=2, stderr=subprocess.STDOUT).decode("utf-8")
+            # print(lookup)
+            lines = lookup.splitlines()
+            
+            if not lines:
+                continue
+            
+            for line in lines:
+                if ".in-addr.arpa" in line:
+                    # print(line)
+                    addr = line.split('=')[1].strip().rstrip(".")
+                    reverse_names.add(addr)
+        return list(reverse_names)
+    except:
+        return []
+
 
 def scan_domain(domain_list):
     '''
@@ -162,14 +182,15 @@ def scan_domain(domain_list):
     for domain in domain_list:
         results[domain] = {}
         # results[domain]['scan_time'] = time.time()
-        # results[domain]['ipv4_addresses'] = get_ip(domain, "ipv4")
+        results[domain]['ipv4_addresses'] = get_ip(domain, "ipv4")
         # results[domain]['ipv6_addresses'] = get_ip(domain, "ipv6")
         # results[domain]['Server'] = get_http_server(domain)
         # results[domain]['insecure_http'] = check_insecure_http(domain)
         # results[domain]['redirect_to_https'] = check_redirect(domain)
         # results[domain]['hsts'] = check_hsts(domain)
         # results[domain]['tls_versions'] = get_tls_versions(domain)
-        results[domain]['root_ca'] = get_root_ca(domain)
+        # results[domain]['root_ca'] = get_root_ca(domain)
+        results[domain]['rdns_names'] = get_rdns_names(results[domain]['ipv4_addresses'])
     return results
 
 
