@@ -129,6 +129,29 @@ def get_tls_versions(domain):
             continue
     return support
 
+def get_root_ca(domain):
+    try:
+        output = subprocess.check_output(
+            ["openssl", "s_client", "-connect", f"{domain}:443"],
+            input=b"",
+            stderr=subprocess.STDOUT,
+            timeout=2
+        ).decode("utf-8")
+        # print(output)
+        lines = output.splitlines()
+        max_depth = -1
+        root_line = None
+        for line in lines:
+            if line.startswith("depth=") and "O =" in line:
+                depth = int(line.split("=")[1].split()[0])
+                if depth > max_depth:
+                    root_line = line
+                    max_depth = depth
+        # print(root_line)
+        root_ca = root_line.split(",")[1].split("=")[1].strip()
+        return root_ca
+    except:
+        return None                
 
 
 def scan_domain(domain_list):
@@ -145,7 +168,8 @@ def scan_domain(domain_list):
         # results[domain]['insecure_http'] = check_insecure_http(domain)
         # results[domain]['redirect_to_https'] = check_redirect(domain)
         # results[domain]['hsts'] = check_hsts(domain)
-        results[domain]['tls_versions'] = get_tls_versions(domain)
+        # results[domain]['tls_versions'] = get_tls_versions(domain)
+        results[domain]['root_ca'] = get_root_ca(domain)
     return results
 
 
