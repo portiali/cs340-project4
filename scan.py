@@ -4,6 +4,7 @@ import json
 import subprocess
 import requests
 import socket
+import urllib
 #these use all the dns resolvers
 # DNS_RESOLVERS = ["208.67.222.222",
 # "1.1.1.1",
@@ -77,6 +78,20 @@ def check_insecure_http(domain):
         return True
     except:
         return False
+#check redirects with requests lib
+def check_redirect(domain):
+    url = f"http://{domain}"
+    for i in range(10):
+        # print('current url: ', url)
+        r = requests.get(url, timeout=2, allow_redirects=False)
+        if not (300 <= r.status_code < 400):
+            break
+        new_url = r.headers.get("Location")
+        if not new_url:
+            break
+        url = urllib.parse.urljoin(url, new_url)
+    return url.startswith("https")
+           
 
 def scan_domain(domain_list):
     '''
@@ -90,6 +105,7 @@ def scan_domain(domain_list):
         results[domain]['ipv6_addresses'] = get_ip(domain, "ipv6")
         results[domain]['Server'] = get_http_server(domain)
         results[domain]['insecure_http'] = check_insecure_http(domain)
+        results[domain]['redirect_to_https'] = check_redirect(domain)
     return results
 
 
