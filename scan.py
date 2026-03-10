@@ -91,7 +91,14 @@ def check_redirect(domain):
             break
         url = urllib.parse.urljoin(url, new_url)
     return url.startswith("https")
-           
+
+def check_hsts(domain):
+    try:
+        r = requests.get(f"http://{domain}", timeout=2)
+        return "Strict-Transport-Security" in r.headers
+    except requests.RequestException:
+        return False
+    
 
 def scan_domain(domain_list):
     '''
@@ -106,6 +113,7 @@ def scan_domain(domain_list):
         results[domain]['Server'] = get_http_server(domain)
         results[domain]['insecure_http'] = check_insecure_http(domain)
         results[domain]['redirect_to_https'] = check_redirect(domain)
+        results[domain]['hsts'] = check_hsts(domain)
     return results
 
 
