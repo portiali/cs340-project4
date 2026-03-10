@@ -2,24 +2,7 @@ import sys
 import time
 import json
 import subprocess
-# Part 1: Scanner Framework
-
-# takes a list of web domains as an input and outputs a JSON dict with info about each domain
-# invoked with python3 scan.py [input_file.txt] [output_file.json]
-# parameter is a filename for the input file: contain a list of domains to test
-# output: JSON dict, keys are the domains that were scanned and the values are dicts with scan results
-# just start by printing scan_time everything else added in p2
-
-
-
-# structure: main() parses file for each domain
-# then have each domain call a scan_domain()
-# scan_domain() will contain call all scanner functions i.e. scan_time(), scan_ipv4() etc.
-
-
-
-# Part 2: Network Scanners
-#hard code the dns resolvers as stated in b)
+import requests
 
 #these use all the dns resolvers
 # DNS_RESOLVERS = ["208.67.222.222",
@@ -64,7 +47,6 @@ def get_ip(domain, type):
         responses = lookup.splitlines()
         if not responses:
             return []
-
         answer = False
         for line in responses:
             if "answer" in line.lower():
@@ -81,6 +63,13 @@ def get_ip(domain, type):
                     ips.add(ip)
     return list(ips)
     
+def get_http_server(domain):
+    response = requests.get(f"https://{domain}")
+    headers = response.headers
+    if "Server" in headers:
+        return headers["Server"]
+    return None
+    
 
 
 def scan_domain(domain_list):
@@ -93,6 +82,7 @@ def scan_domain(domain_list):
         results[domain]['scan_time'] = time.time()
         results[domain]['ipv4_addresses'] = get_ip(domain, "ipv4")
         results[domain]['ipv6_addresses'] = get_ip(domain, "ipv6")
+        results[domain]['Server'] = get_http_server(domain)
     return results
 
 
@@ -115,6 +105,7 @@ def main():
 
     results = scan_domain(domain_list)
 
+    
     with open(output_file, 'w') as f:
         json.dump(results, f, sort_keys=True, indent=4)
     return results
