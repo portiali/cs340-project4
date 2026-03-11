@@ -5,6 +5,7 @@ import subprocess
 import requests
 import socket
 import urllib
+import maxminddb
 #these use all the dns resolvers
 # DNS_RESOLVERS = ["208.67.222.222",
 # "1.1.1.1",
@@ -200,6 +201,46 @@ def get_rtt(ips):
         print('telnet command not found, skipping RTT!', file=sys.stderr)
         return None
 
+def format_location(data):
+    city = None
+    state = None
+    country = None
+
+    if "city" in data and "names" in data["city"]:
+        city = data["city"]["names"].get("en")
+
+    if "subdivisions" in data and len(data["subdivisions"]) > 0:
+        state = data["subdivisions"][0]["names"].get("en")
+
+    if "country" in data:
+        country = data["country"]["names"].get("en")
+
+    parts = [p for p in [city, state, country] if p]
+
+    return ", ".join(parts)
+
+
+def get_geo_locations(ips):
+    locations = set()
+
+    try:
+        with maxminddb.open_database("GeoLite2-City.mmdb") as reader:
+            for ip in ips:
+                data = reader.get(ip)
+
+                if not data:
+                    continue
+
+                loc = format_location(data)
+
+                if loc:
+                    locations.add(loc)
+
+        return list(locations)
+
+    except Exception as e:
+        print(e)
+        return None
 
 def scan_domain(domain_list):
     '''
@@ -217,12 +258,16 @@ def scan_domain(domain_list):
         # results[domain]['hsts'] = check_hsts(domain)
         # results[domain]['tls_versions'] = get_tls_versions(domain)
         # results[domain]['root_ca'] = get_root_ca(domain)
-        # results[domain]['rdns_names'] = get_rdns_names(results[domain]['ipv4_addresses'])
+    
+        ips = results[domain]['ipv4_addresses']
+        # results[domain]['rdns_names'] = get_rdns_names(ips)
         
-        
-        rtts = get_rtt(results[domain]['ipv4_addresses'])
+    
+        rtts = get_rtt(ips)
         if rtts:
             results[domain]['rtt_range'] = rtts
+
+        results[domain]['geo_locations'] = get_geo_locations(ips)
 
     return results
 
