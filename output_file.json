@@ -1,95 +1,404 @@
 {
     "acm.org": {
-        "scan_time": 1773045511.721822
+        "geo_locations": [],
+        "ipv4_addresses": [
+            "104.17.78.30",
+            "104.17.79.30"
+        ],
+        "rtt_range": [
+            4,
+            4
+        ]
     },
     "amazon.com": {
-        "scan_time": 1773045511.721815
+        "geo_locations": [
+            "Ashburn, Virginia, United States"
+        ],
+        "ipv4_addresses": [
+            "98.87.170.71",
+            "98.82.161.185",
+            "98.87.170.74"
+        ],
+        "rtt_range": [
+            23,
+            25
+        ]
     },
     "cra.org": {
-        "scan_time": 1773045511.721822
+        "geo_locations": [
+            "Ashburn, Virginia, United States"
+        ],
+        "ipv4_addresses": [
+            "54.242.59.162"
+        ],
+        "rtt_range": [
+            20,
+            20
+        ]
     },
     "ebpf.io": {
-        "scan_time": 1773045511.721823
+        "geo_locations": [],
+        "ipv4_addresses": [
+            "104.26.4.27",
+            "104.26.5.27",
+            "172.67.71.235"
+        ],
+        "rtt_range": [
+            3,
+            5
+        ]
     },
     "en.wikipedia.org": {
-        "scan_time": 1773045511.721815
+        "geo_locations": [
+            "United States"
+        ],
+        "ipv4_addresses": [
+            "208.80.154.224"
+        ],
+        "rtt_range": [
+            20,
+            20
+        ]
     },
     "fandom.com": {
-        "scan_time": 1773045511.7218182
+        "geo_locations": [],
+        "ipv4_addresses": [
+            "162.159.142.170",
+            "172.66.2.166"
+        ],
+        "rtt_range": [
+            4,
+            4
+        ]
     },
     "ieee.org": {
-        "scan_time": 1773045511.721822
+        "geo_locations": [
+            "Hoffman, New Jersey, United States"
+        ],
+        "ipv4_addresses": [
+            "140.98.193.152"
+        ],
+        "rtt_range": [
+            28,
+            28
+        ]
     },
     "illinois.edu": {
-        "scan_time": 1773045511.7218199
+        "geo_locations": [
+            "Chicago, Illinois, United States"
+        ],
+        "ipv4_addresses": [
+            "64.236.243.124"
+        ],
+        "rtt_range": [
+            5,
+            5
+        ]
     },
     "imdb.com": {
-        "scan_time": 1773045511.7218182
+        "geo_locations": [
+            "Ashburn, Virginia, United States"
+        ],
+        "ipv4_addresses": [
+            "44.215.137.99",
+            "98.82.158.179",
+            "98.82.155.134"
+        ],
+        "rtt_range": [
+            23,
+            24
+        ]
     },
     "instagram.com": {
-        "scan_time": 1773045511.721819
+        "geo_locations": [
+            "Chicago, Illinois, United States",
+            "Southfield, Michigan, United States"
+        ],
+        "ipv4_addresses": [
+            "57.144.172.34",
+            "157.240.254.174",
+            "57.144.174.34"
+        ],
+        "rtt_range": [
+            3,
+            14
+        ]
     },
     "kellogg.northwestern.edu": {
-        "scan_time": 1773045511.7218199
+        "geo_locations": [
+            "United States"
+        ],
+        "ipv4_addresses": [
+            "13.107.213.40",
+            "13.107.246.38",
+            "13.107.246.40",
+            "13.107.213.38"
+        ],
+        "rtt_range": [
+            4,
+            4
+        ]
     },
     "kernel.org": {
-        "scan_time": 1773045511.721823
+        "geo_locations": [
+            "Toronto, Ontario, Canada"
+        ],
+        "ipv4_addresses": [
+            "172.105.4.254"
+        ],
+        "rtt_range": [
+            15,
+            15
+        ]
     },
     "lab.senlin.dev": {
-        "scan_time": 1773045511.721819
+        "geo_locations": [],
+        "ipv4_addresses": [
+            "104.21.60.142",
+            "172.67.197.131"
+        ],
+        "rtt_range": [
+            5,
+            5
+        ]
     },
     "lwn.net": {
-        "scan_time": 1773045511.721822
+        "geo_locations": [
+            "Cedar Knolls, New Jersey, United States"
+        ],
+        "ipv4_addresses": [
+            "173.255.236.65"
+        ],
+        "rtt_range": [
+            24,
+            24
+        ]
     },
     "mccormick.northwestern.edu": {
-        "scan_time": 1773045511.721819
+        "geo_locations": [
+            "Villa Park, Illinois, United States"
+        ],
+        "ipv4_addresses": [
+            "165.124.149.20"
+        ],
+        "rtt_range": [
+            3,
+            3
+        ]
     },
     "networks.cs.northwestern.edu": {
-        "scan_time": 1773045511.721819
+        "geo_locations": [
+            "United States"
+        ],
+        "ipv4_addresses": [
+            "165.124.184.154"
+        ],
+        "rtt_range": [
+            2,
+            2
+        ]
     },
     "news.ycombinator.com": {
-        "scan_time": 1773045511.721822
+        "geo_locations": [
+            "United States"
+        ],
+        "ipv4_addresses": [
+            "209.216.230.207"
+        ],
+        "rtt_range": [
+            55,
+            55
+        ]
     },
     "northwestern.edu": {
-        "scan_time": 1773045511.721819
+        "geo_locations": [
+            "Skokie, Illinois, United States"
+        ],
+        "ipv4_addresses": [
+            "129.105.136.48"
+        ],
+        "rtt_range": [
+            3,
+            3
+        ]
     },
     "one.one.one.one": {
-        "scan_time": 1773045511.721823
+        "geo_locations": [],
+        "ipv4_addresses": [
+            "1.1.1.1",
+            "1.0.0.1"
+        ],
+        "rtt_range": [
+            4,
+            4
+        ]
     },
     "pinterest.com": {
-        "scan_time": 1773045511.7218182
+        "geo_locations": [
+            "San Francisco, California, United States"
+        ],
+        "ipv4_addresses": [
+            "151.101.0.84",
+            "151.101.64.84",
+            "151.101.192.84",
+            "151.101.128.84"
+        ],
+        "rtt_range": [
+            4,
+            5
+        ]
     },
     "reddit.com": {
-        "scan_time": 1773045511.721823
+        "geo_locations": [
+            "San Francisco, California, United States"
+        ],
+        "ipv4_addresses": [
+            "151.101.193.140",
+            "151.101.65.140",
+            "151.101.1.140",
+            "151.101.129.140"
+        ],
+        "rtt_range": [
+            4,
+            5
+        ]
     },
     "rust-lang.org": {
-        "scan_time": 1773045511.721823
+        "geo_locations": [
+            "California, United States",
+            "San Francisco, California, United States"
+        ],
+        "ipv4_addresses": [
+            "185.199.109.153",
+            "185.199.108.153",
+            "185.199.110.153",
+            "185.199.111.153"
+        ],
+        "rtt_range": [
+            4,
+            5
+        ]
     },
     "senlin.dev": {
-        "scan_time": 1773045511.721819
+        "geo_locations": [
+            "California, United States",
+            "San Francisco, California, United States"
+        ],
+        "ipv4_addresses": [
+            "185.199.109.153",
+            "185.199.108.153",
+            "185.199.110.153",
+            "185.199.111.153"
+        ],
+        "rtt_range": [
+            3,
+            5
+        ]
     },
     "stackoverflow.com": {
-        "scan_time": 1773045511.721823
+        "geo_locations": [
+            "United States"
+        ],
+        "ipv4_addresses": [
+            "198.252.206.1"
+        ],
+        "rtt_range": [
+            4,
+            4
+        ]
     },
     "stevetarzia.com": {
-        "scan_time": 1773045511.7218199
+        "geo_locations": [
+            "United States"
+        ],
+        "ipv4_addresses": [
+            "3.143.61.245"
+        ],
+        "rtt_range": [
+            12,
+            12
+        ]
     },
     "tripadvisor.com": {
-        "scan_time": 1773045511.7218182
+        "geo_locations": [
+            "United States"
+        ],
+        "ipv4_addresses": [
+            "18.172.134.16",
+            "18.172.134.6",
+            "18.172.134.62",
+            "18.172.134.33"
+        ],
+        "rtt_range": [
+            3,
+            4
+        ]
     },
     "uchicago.edu": {
-        "scan_time": 1773045511.7218199
+        "geo_locations": [
+            "Ashburn, Virginia, United States"
+        ],
+        "ipv4_addresses": [
+            "3.215.148.80"
+        ],
+        "rtt_range": [
+            21,
+            21
+        ]
     },
     "users.cs.northwestern.edu": {
-        "scan_time": 1773045511.7218199
+        "geo_locations": [
+            "Chicago, Illinois, United States"
+        ],
+        "ipv4_addresses": [
+            "129.105.44.20"
+        ],
+        "rtt_range": [
+            3,
+            3
+        ]
     },
     "walmart.com": {
-        "scan_time": 1773045511.721819
+        "geo_locations": [
+            "United States",
+            "Slough, England, United Kingdom"
+        ],
+        "ipv4_addresses": [
+            "23.14.92.189",
+            "2.16.232.188"
+        ],
+        "rtt_range": [
+            4,
+            4
+        ]
     },
     "yelp.com": {
-        "scan_time": 1773045511.721815
+        "geo_locations": [
+            "Denver, Colorado, United States",
+            "Chicago, Illinois, United States"
+        ],
+        "ipv4_addresses": [
+            "146.75.76.116",
+            "199.232.64.116",
+            "146.75.80.116"
+        ],
+        "rtt_range": [
+            4,
+            24
+        ]
     },
     "youtube.com": {
-        "scan_time": 1773045511.721814
+        "geo_locations": [
+            "United States"
+        ],
+        "ipv4_addresses": [
+            "142.250.73.110",
+            "142.250.189.142",
+            "142.250.177.238"
+        ],
+        "rtt_range": [
+            3,
+            51
+        ]
     }
 }
