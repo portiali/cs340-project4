@@ -249,18 +249,18 @@ def scan_domain(domain_list):
     results = {}
     for domain in domain_list:
         results[domain] = {}
-        # results[domain]['scan_time'] = time.time()
+        results[domain]['scan_time'] = time.time()
         results[domain]['ipv4_addresses'] = get_ip(domain, "ipv4")
-        # results[domain]['ipv6_addresses'] = get_ip(domain, "ipv6")
-        # results[domain]['Server'] = get_http_server(domain)
-        # results[domain]['insecure_http'] = check_insecure_http(domain)
-        # results[domain]['redirect_to_https'] = check_redirect(domain)
-        # results[domain]['hsts'] = check_hsts(domain)
-        # results[domain]['tls_versions'] = get_tls_versions(domain)
-        # results[domain]['root_ca'] = get_root_ca(domain)
+        results[domain]['ipv6_addresses'] = get_ip(domain, "ipv6")
+        results[domain]['Server'] = get_http_server(domain)
+        results[domain]['insecure_http'] = check_insecure_http(domain)
+        results[domain]['redirect_to_https'] = check_redirect(domain)
+        results[domain]['hsts'] = check_hsts(domain)
+        results[domain]['tls_versions'] = get_tls_versions(domain)
+        results[domain]['root_ca'] = get_root_ca(domain)
     
         ips = results[domain]['ipv4_addresses']
-        # results[domain]['rdns_names'] = get_rdns_names(ips)
+        results[domain]['rdns_names'] = get_rdns_names(ips)
         
     
         rtts = get_rtt(ips)
