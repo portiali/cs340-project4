@@ -31,6 +31,7 @@ DNS_RESOLVERS = [
     "9.9.9.9"
 ]
 
+#tls flag args for using subprocess
 TLS_FLAGS = {
     "SSLv2": "-ssl2",
     "SSLv3": "-ssl3",
@@ -78,25 +79,41 @@ def get_ip(domain, type):
     return list(ips)
     
 def get_http_server(domain):
-    response = requests.get(f"https://{domain}")
-    headers = response.headers
-    if "Server" in headers:
-        return headers["Server"]
-    return None
+    '''
+    Returns the web server name for a given domain
+    '''
+    try:
+        response = requests.get(f"https://{domain}")
+        headers = response.headers
+        if "Server" in headers:
+            return headers["Server"]
+        return None
+    except requests.exceptions.RequestException:
+        return None
     
 def check_insecure_http(domain):
+    '''
+    Checks http support for a given domain
+    '''
     try:
         s = socket.create_connection((domain, 80), timeout=2)
         s.close()
         return True
     except:
         return False
+
 #check redirects with requests lib
 def check_redirect(domain):
+    '''
+    Checks for url redirects for a given domain
+    '''
     url = f"http://{domain}"
     for i in range(10):
         # print('current url: ', url)
-        r = requests.get(url, timeout=2, allow_redirects=False)
+        try:
+            r = requests.get(url, timeout=2, allow_redirects=False)
+        except requests.exceptions.RequestException:
+            return False
         if not (300 <= r.status_code < 400):
             break
         new_url = r.headers.get("Location")
@@ -106,6 +123,9 @@ def check_redirect(domain):
     return url.startswith("https")
 
 def check_hsts(domain):
+    '''
+    Returns whether hsts is supported for a domain
+    '''
     try:
         r = requests.get(f"http://{domain}", timeout=2)
         return "Strict-Transport-Security" in r.headers
@@ -113,6 +133,9 @@ def check_hsts(domain):
         return False
 
 def get_tls_versions(domain):
+    '''
+    Returns all tls versions supported for a domain
+    '''
     support = []
     for tls, flag in TLS_FLAGS.items():
         try:
@@ -131,6 +154,9 @@ def get_tls_versions(domain):
     return support
 
 def get_root_ca(domain):
+    '''
+    Returns the root cert authority associated with a domain
+    '''
     try:
         output = subprocess.check_output(
             ["openssl", "s_client", "-connect", f"{domain}:443"],
@@ -156,6 +182,9 @@ def get_root_ca(domain):
             
 
 def get_rdns_names(ips):
+    '''
+    Retrieves all rdns names associated with given ips
+    '''
     reverse_names = set()
     try:
         for ip in ips:
@@ -176,6 +205,9 @@ def get_rdns_names(ips):
         return []
 
 def get_rtt(ips):
+    '''
+    Uses telnet to obtain round trip time from the 'real' field
+    '''
     min_t, max_t = float('inf'), float('-inf')
     try:
         for ip in ips:
@@ -202,6 +234,9 @@ def get_rtt(ips):
         return None
 
 def format_location(data):
+    '''
+    Formats location data from geolite object returned for each address
+    '''
     city = None
     state = None
     country = None
@@ -215,12 +250,16 @@ def format_location(data):
     if "country" in data:
         country = data["country"]["names"].get("en")
 
+    #will just put any information retrieved about location in list before joining
     parts = [p for p in [city, state, country] if p]
 
     return ", ".join(parts)
 
 
 def get_geo_locations(ips):
+    '''
+    Queries geolite for location information for each ipv4 address
+    '''
     locations = set()
 
     try:
@@ -247,6 +286,7 @@ def scan_domain(domain_list):
     Calls each individual scanner to retrieve information about each domain
     '''
     results = {}
+    #for every domain perform data collection for its features
     for domain in domain_list:
         results[domain] = {}
         results[domain]['scan_time'] = time.time()
