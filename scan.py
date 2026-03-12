@@ -229,7 +229,7 @@ def get_rtt(ips):
                     min_t = min(min_t, total)
                     max_t = max(max_t, total)
         return [min_t, max_t] if min_t != float('inf') and max_t != float('-inf') else None
-    except FileNotFoundError:
+    except subprocess.CalledProcessError:
         print('telnet command not found, skipping RTT!', file=sys.stderr)
         return None
 
