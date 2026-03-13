@@ -83,7 +83,7 @@ def get_http_server(domain):
     Returns the web server name for a given domain
     '''
     try:
-        response = requests.get(f"https://{domain}")
+        response = requests.get(f"https://{domain}", timeout=2)
         headers = response.headers
         if "Server" in headers:
             return headers["Server"]
